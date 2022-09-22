@@ -1,4 +1,4 @@
-const connection = require("./database")
+const connection = require("../database")
 
 let getAlumn = (req, res) => {
     {

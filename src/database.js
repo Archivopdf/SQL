@@ -5,7 +5,7 @@ const connection = mysql.createConnection(
     {
         host: "localhost",
         user: "root",
-        password: "1234",
+        password: "01121995",
         database: "reto2"
     }
 )
@@ -13,7 +13,7 @@ const connection = mysql.createConnection(
 connection.connect((err) => {
 
     if (!err) {
-        console.log("Connected to bdd_shool");
+        console.log("Connected to school data base");
     } else {
         console.log(err);
     }

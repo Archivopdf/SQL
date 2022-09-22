@@ -1,4 +1,4 @@
-const connection = require("./database")
+const connection = require("../database")
 
 let getGiven = (req, res) => {
     console.log(req.query.id)
