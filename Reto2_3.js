@@ -21,7 +21,7 @@ connection.connect(function (err) {
 
 //insertar datos en la tabla
 
-// let sql1 = "INSERT INTO students (first_name, last_name, group_id, yearEntry) VALUES (\"Jose\", \"Fernandez\", 1, 2022-08-23)";
+// let sql1 = "INSERT INTO students (first_name, last_name, group_id, yearEntry) VALUES (\"Jose\", \"Fernandez\", 1, '2022-08-23')";
 
 // connection.query(sql1, function (err, result) {
 //     if (err)
@@ -86,7 +86,7 @@ connection.connect(function (err) {
 
 //Borrar +10años
 
-// let sql5 = "DELETE FROM marks WHERE date <= (2012)"
+// let sql5 = "DELETE FROM marks WHERE date <= '2022-08-23'"
 // connection.query(sql5, function (err, result) {
 //     if (err)
 //         console.log(err);
@@ -98,7 +98,7 @@ connection.connect(function (err) {
 
 // // actualizar notas inferiores de 5
 
-// let sql6 = "UPDATE (mark) FROM (marks) SET (mark) = 5  WHERE (mark) <= 5";
+// let sql6 = "UPDATE mark FROM marks SET mark = 5  WHERE mark <= 5";
 
 // connection.query(sql6, function (err, result) {
 //     if (err)
@@ -136,8 +136,8 @@ connection.connect(function (err) {
 // })
 
 // // Listar
-
-// let sql9 = "SELECT (*) FROM groups"
+// groups palabra reservada de mysql
+// let sql9 = "SELECT * FROM Reto2.groups"
 
 // connection.query(sql9, function (err, result) {
 //     if (err)
@@ -164,7 +164,7 @@ connection.connect(function (err) {
 
 // // Todos los de este año
 
-// let sql11 = "SELECT * FROM students WHERE yearEntry = 2022"
+// let sql11 = "SELECT * FROM students WHERE yearEntry >= '2022-01-01' AND yearEntry <= '2022-12-30'"
 
 // connection.query(sql11, function (err, result) {
 //     if (err)
@@ -177,7 +177,7 @@ connection.connect(function (err) {
 
 // // Nº de profesores
 
-// let sql12 = "SELECT  subject_id, COUNT(id_profesor) AS num_profesor FROM subject_teacher BY subject_id";
+// let sql12 = "SELECT  subject_id, COUNT (teacher_id) AS num_profesor FROM subject_teacher GROUP BY subject_id";
 
 // connection.query(sql12, function (err, result) {
 //     if (err)
@@ -190,7 +190,7 @@ connection.connect(function (err) {
 
 // // Reto 2 Dia 2
 
-// let sql13 = "SELECT student_id, mark FROM marks WHERE (idstudent BETWEEN 1 AND 20) OR (mark > 8 AND `date` BETWEEN '2021-01-01' AND '2021-12-31')"
+// let sql13 = "SELECT student_id, mark FROM marks WHERE student_id BETWEEN 1 AND 20 OR mark > 8 AND `date` BETWEEN '2021-01-01' AND '2021-12-31'"
 
 // connection.query(sql13, function (err, result) {
 //     if (err)
@@ -218,7 +218,7 @@ connection.connect(function (err) {
 
 //  Media aritmetica last year
 
-// let sql15 = "SELECT idstudent, AVG (mark) FROM marks WHERE idstudent AND date BETWEEN "2022-01-01" AND "2022-06-30" GROUP BY idstudent"
+// let sql15 = "SELECT student_id, AVG (mark) FROM marks WHERE student_id AND date BETWEEN '2022-01-01' AND '2022-06-30' GROUP BY student_id"
 
 // connection.query(sql15, function (err, result) {
 
@@ -232,7 +232,7 @@ connection.connect(function (err) {
 
 // Reto1 Dia3
 
-// let sql16 = "SELECT CONCAT (students.first_name, ' ' , students.last_name) AS student, subject.title AS subject FROM marks JOIN students ON marks.student_id = students.student_id JOIN subject ON marks.subject_id = subject.subject_id ORDER BY estudent"
+// let sql16 = "SELECT CONCAT (students.first_name, ' ' , students.last_name) AS student, subjects.title AS subject FROM marks JOIN students ON marks.student_id = students.idstudents JOIN subjects ON marks.subject_id = subjects.idsubjects ORDER BY student"
 
 // connection.query(sql16, function (err, result) {
 
@@ -246,7 +246,7 @@ connection.connect(function (err) {
 
 // students/signatures, profesor que imparte la asignatura
 
-// let sql17 = "SELECT CONCAT(teachers.first_name, ' ', teachers.last_name) as teacher, subject.title AS subject FROM teachers JOIN subject_teacher ON teachers.teachers_id = subject_teacher.teacher_id JOIN subject ON subject_teacher.subject_id = subject.idsubjects ORDER BY profesor"
+// let sql17 = "SELECT CONCAT(teachers.first_name, ' ', teachers.last_name) as teacher, subjects.title AS subject FROM teachers JOIN subject_teacher ON teachers.teacher_id = subject_teacher.teacher_id JOIN subjects ON subject_teacher.subject_id = subjects.idsubjects ORDER BY teacher"
 
 // connection.query(sql17, function (err, result) {
 
@@ -260,14 +260,14 @@ connection.connect(function (err) {
 
 // numero total de alumnos, la asignatura y el profesor
 
-// let sql18 = "SELECT subject.title AS subject, COUNT(idstudent) AS students_num, CONCAT(teachers.first_name, ' ', teachers.last_name) AS teachers_fullname FROM marks JOIN subjects ON marks.idsubjects = subject.idsubjects JOIN subject_teacher ON subjects.idsubjects = subject_teacher.idsubjects JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id GROUP BY subject ORDER BY subject"
+let sql18 = "SELECT subjects.title AS subject, COUNT(student_id) AS students_num, CONCAT(teachers.first_name, ' ', teachers.last_name) AS teachers_fullname FROM marks JOIN subjects ON marks.subject_id = subjects.idsubjects JOIN subject_teacher ON subjects.idsubjects = subject_teacher.subject_id JOIN teachers ON subject_teacher.teacher_id = teachers.teacher_id GROUP BY subject ORDER BY subject"
 
-// connection.query(sql18, function (err, result) {
+connection.query(sql18, function (err, result) {
 
-//     if (err)
-//         console.log(err);
-//     else {
-//         console.log("First_name, Last_name and the subjects ");
-//         console.log(result);
-//     }
-// })
+    if (err)
+        console.log(err);
+    else {
+        console.log("First_name, Last_name and the subjects ");
+        console.log(result);
+    }
+})
